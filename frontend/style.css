@@ -1,4 +1,4 @@
-const API_URL = 'YOUR_APPS_SCRIPT_URL';
+const API_URL = 'https://script.google.com/macros/s/AKfycbwX9mynaqxRu9nfBWP2C1dhE_o9ZZW9_4UJASzLEmD9yXdJJZl-vvUURGuOuoo2s2ABHw/exec';
 
 document.getElementById('dataForm').addEventListener('submit', async (e) => {
   e.preventDefault();
