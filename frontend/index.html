@@ -3,28 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <title>Shift Logger</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
-    form { max-width: 400px; margin: auto; }
-    input, button { width: 100%; padding: 10px; margin: 8px 0; }
-    button { background-color: #4CAF50; color: white; border: none; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h2>Shift Logger</h2>
+  <h1>Shift Data Entry</h1>
   <form id="shiftForm">
-    <input type="text" id="time" placeholder="Time (e.g., 08-10)" required>
-    <input type="number" id="target" placeholder="Target" required>
-    <input type="number" id="sbl" placeholder="SBL" required>
-    <input type="number" id="sbr" placeholder="SBR" required>
-    <input type="number" id="dtnd" placeholder="DTND" required>
+    <label>Time:</label>
+    <input type="text" id="time" required>
+
+    <label>Target:</label>
+    <input type="number" id="target" required>
+
+    <label>SBL:</label>
+    <input type="number" id="sbl" required>
+
+    <label>SBR:</label>
+    <input type="number" id="sbr" required>
+
+    <label>DTND:</label>
+    <input type="number" id="dtnd" required>
+
     <button type="submit">Submit</button>
+    <p id="status"></p>
   </form>
-  <p id="message"></p>
 
   <script>
     const form = document.getElementById('shiftForm');
-    const message = document.getElementById('message');
+    const status = document.getElementById('status');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -38,18 +43,18 @@
       };
 
       try {
-        const res = await fetch("https://script.google.com/macros/s/AKfycbwX9mynaqxRu9nfBWP2C1dhE_o9ZZW9_4UJASzLEmD9yXdJJZl-vvUURGuOuoo2s2ABHw/exec", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
+        const response = await fetch('https://script.google.com/macros/s/YOUR_DEPLOYED_WEBAPP_URL/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(data)
         });
 
-        const result = await res.json();
-        message.textContent = result.status === "OK" ? "✅ Data submitted!" : "❌ Something went wrong.";
-      } catch (err) {
-        message.textContent = "❌ Error: " + err.message;
+        const result = await response.text();
+        status.innerText = result;
+        form.reset();
+      } catch (error) {
+        status.innerText = "Error submitting data.";
+        console.error(error);
       }
     });
   </script>
