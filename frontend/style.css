@@ -1,36 +1,122 @@
-const API_URL = 'https://script.google.com/macros/s/AKfycbwX9mynaqxRu9nfBWP2C1dhE_o9ZZW9_4UJASzLEmD9yXdJJZl-vvUURGuOuoo2s2ABHw/exec';
+/* styles.css */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
 
-document.getElementById('dataForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const messageDiv = document.getElementById('message');
-  messageDiv.textContent = 'Submitting...';
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-  const data = {
-    shift: document.getElementById('shift').value,
-    time: document.getElementById('time').value,
-    target: document.getElementById('target').value,
-    sbl: document.getElementById('sbl').value,
-    sbr: document.getElementById('sbr').value,
-    dtnd: document.getElementById('dtnd').value
-  };
+h1 {
+  color: #1a73e8;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.2rem;
+}
 
-  try {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      body: JSON.stringify(data)
-    });
-    const result = await response.json();
-    
-    if (result.error) {
-      messageDiv.textContent = `❌ ${result.error}`;
-      messageDiv.className = 'error';
-    } else {
-      messageDiv.textContent = `✅ ${result.success}`;
-      messageDiv.className = 'success';
-      document.getElementById('dataForm').reset();
-    }
-  } catch (error) {
-    messageDiv.textContent = `❌ Network error: ${error.message}`;
-    messageDiv.className = 'error';
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #5f6368;
+  font-weight: 500;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #dadce0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%235f6368%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px auto;
+}
+
+button {
+  background: #1a73e8;
+  color: white;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #1557b0;
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  background: #dadce0;
+  cursor: not-allowed;
+}
+
+#message {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.success {
+  background: #e6f4ea;
+  color: #137333;
+  border: 2px solid #137333;
+}
+
+.error {
+  background: #fce8e6;
+  color: #c5221f;
+  border: 2px solid #c5221f;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .container {
+    padding: 1.5rem;
+    margin: 10px;
   }
-});
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  input,
+  select {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
